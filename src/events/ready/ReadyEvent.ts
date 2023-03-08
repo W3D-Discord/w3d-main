@@ -1,10 +1,5 @@
 import DiscordClient from '../../client/Client'
-import { LogLevel } from '../../services/DebugLogger'
-import {
-  getHomeGuild,
-  greenTextColor,
-  redTextColor,
-} from '../../utils/functions/util'
+import { greenTextColor, redTextColor } from '../../utils/functions/util'
 import BaseEvent from '../../utils/structures/BaseEvent'
 import { exit } from 'process'
 

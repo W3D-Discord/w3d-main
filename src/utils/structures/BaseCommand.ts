@@ -11,13 +11,12 @@ import {
   MessageEditOptions,
   WebhookEditMessageOptions,
 } from 'discord.js'
-import AutoCompleteOptions from '../../types/AutoCompleteOptions'
-import CommandOptions from '../../types/CommandOptions'
-import InteractionOptions from '../../types/InteractionOptions'
+import AutoCompleteOptions from '../../types/AutoCompleteOptionsType'
+import CommandOptions from '../../types/CommandOptionsType'
+import InteractionOptions from '../../types/InteractionOptionsType'
 
 export default abstract class BaseCommand {
-  supportsIntenraction: boolean = false
-  supportsContextMenu: boolean = false
+  supportsInteraction: boolean = false
   supportsLegacy: boolean = true
   permissions: PermissionResolvable[] = []
   coolDown?: number

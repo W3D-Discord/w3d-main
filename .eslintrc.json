@@ -16,6 +16,7 @@
     "no-undef": "off",
     "n/handle-callback-err": "off",
     "n/no-path-concat": "off",
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-useless-return": "off"
   }
 }

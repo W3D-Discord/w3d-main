@@ -4,7 +4,7 @@ import fs from 'fs'
 import { z as zod } from 'zod'
 
 export type ConfigType = {
-  [key: string]: string | number
+  [key: string]: any
 }
 
 export type ConfigContainerType = {

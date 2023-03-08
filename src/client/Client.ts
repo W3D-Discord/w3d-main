@@ -9,6 +9,7 @@ import BaseCommand from '../utils/structures/BaseCommand'
 import BaseEvent from '../utils/structures/BaseEvent'
 import DebugLogger, { LogLevel } from '../services/DebugLogger'
 import { Config } from './Config'
+import Auth from '../services/Auth'
 
 export default class DiscordClient extends Client {
   private _commands = new Collection<string, BaseCommand>()
@@ -16,6 +17,7 @@ export default class DiscordClient extends Client {
 
   static client: DiscordClient
 
+  auth: Auth = {} as Auth
   rootdir: string
   msg: Message | CommandInteraction | null = null
   config: Config

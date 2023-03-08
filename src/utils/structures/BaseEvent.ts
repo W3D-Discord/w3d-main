@@ -7,5 +7,5 @@ export default abstract class BaseEvent {
     return this.name
   }
 
-  abstract run(client: DiscordClient, ...args: Array<string>): void
+  abstract run(client: DiscordClient, ...args: any): void
 }
