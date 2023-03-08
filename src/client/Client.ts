@@ -33,6 +33,7 @@ export default class DiscordClient extends Client {
 
     this.rootdir = rootdir
     this.config = new Config(this)
+    DiscordClient.client = this
 
     process.on('uncaughtException', (error, origin) => {
       console.log('Uncaught', error)

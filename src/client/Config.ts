@@ -1,6 +1,7 @@
 import DiscordClient from './Client'
 import path from 'path'
 import fs from 'fs'
+import { z as zod } from 'zod'
 
 export type ConfigType = {
   [key: string]: string | number
