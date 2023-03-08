@@ -1,95 +1,70 @@
-import BaseEvent from '../../utils/structures/BaseEvent'
-import {
-  GuildMember,
-  EmbedBuilder,
-  ChannelType,
-  Interaction,
-  CommandInteraction,
-} from 'discord.js'
-import DiscordClient from '../../client/Client'
-import InteractionOptions from '../../types/InteractionOptionsType'
-import AutoCompleteOptions from '../../types/AutoCompleteOptionsType'
+import BaseEvent from "../../utils/structures/BaseEvent";
+import { GuildMember, EmbedBuilder, ChannelType, Interaction, CommandInteraction, Events } from "discord.js";
+import DiscordClient from "../../client/Client";
+import InteractionOptions from "../../types/InteractionOptionsType";
+import AutoCompleteOptions from "../../types/AutoCompleteOptionsType";
+import { nonPermEmbed } from "../../utils/components/embeds/nonPerms";
 
 export default class InteractionCreateEvent extends BaseEvent {
   constructor() {
-    super('interactionCreate')
+    super(Events.InteractionCreate);
   }
 
-  async run(
-    client: DiscordClient,
-    interaction: Interaction,
-    cmdInteraction: CommandInteraction,
-  ) {
-    if (
-      !interaction.guild ||
-      !interaction.channel ||
-      interaction.channel.type === ChannelType.DM
-    ) {
+  async run(client: DiscordClient, interaction: Interaction, cmdInteraction: CommandInteraction) {
+    if (!interaction.guild || !interaction.channel || interaction.channel.type === ChannelType.DM) {
       if (interaction.isRepliable())
         await interaction.reply({
-          content: 'Voce nao pode utilizar comandos na DM',
+          content: "Voce nao pode utilizar comandos na DM",
           ephemeral: true,
-        })
+        });
 
-      return
+      return;
     }
 
     if (interaction.isCommand()) {
-      client.setMessage(interaction)
+      client.setMessage(interaction);
 
-      const { commandName } = interaction
+      const { commandName } = interaction;
 
-      const command = client.commands.get(commandName)
+      const command = client.commands.get(commandName);
 
       if (command && interaction.isCommand() && command.supportsInteraction) {
-        const allowed = await client.auth.verify(
-          interaction.member! as GuildMember,
-          command,
-        )
+        const allowed = await client.auth.verify(interaction.member! as GuildMember, command);
 
         if (!allowed) {
           await interaction.reply({
-            embeds: [
-              new EmbedBuilder()
-                .setColor('#fff')
-                .setDescription(
-                  'Voce nao tem permissao para executar este comando',
-                ),
-            ],
+            embeds: [nonPermEmbed],
             ephemeral: true,
-          })
+          });
 
-          return
+          return;
         }
 
         const options = {
           cmdName: commandName,
           options: interaction.options,
           isInteraction: true,
-        } as InteractionOptions
+        } as InteractionOptions;
 
-        await command.execute(client, interaction, options)
-        ;(global as any).lastCommand = commandName
+        await command.execute(client, interaction, options);
+        (global as any).lastCommand = commandName;
       }
     } else if (interaction.isAutocomplete()) {
-      client.setMessage(cmdInteraction)
+      client.setMessage(cmdInteraction);
 
-      const { commandName } = interaction
+      const { commandName } = interaction;
 
-      const command = client.commands.get(commandName)
+      const command = client.commands.get(commandName);
 
       if (command && command.supportsInteraction) {
-        const allowed = await client.auth.verify(
-          interaction.member! as GuildMember,
-          command,
-        )
+        const allowed = await client.auth.verify(interaction.member! as GuildMember, command);
 
         if (!allowed) {
-          return
+          return;
         }
 
         if (!(await command.perms(client, cmdInteraction))) {
-          return
+          return;
         }
 
         const options = {
@@ -98,33 +73,30 @@ export default class InteractionCreateEvent extends BaseEvent {
           isInteraction: true,
           optionName: interaction.options.getFocused(true).name,
           query: interaction.options.getFocused(true).value.toString(),
-        } as unknown as AutoCompleteOptions
+        } as unknown as AutoCompleteOptions;
 
-        await command.autoComplete(client, interaction, options)
-        ;(global as any).lastCommand = commandName
+        await command.autoComplete(client, interaction, options);
+        (global as any).lastCommand = commandName;
       }
     } else {
-      if (!(global as any).commandName) return
+      if (!(global as any).commandName) return;
 
-      client.setMessage(cmdInteraction)
+      client.setMessage(cmdInteraction);
 
-      const command = client.commands.get((global as any).commandName)
+      const command = client.commands.get((global as any).commandName);
 
       if (command && command.supportsInteraction) {
-        const allowed = await client.auth.verify(
-          interaction.member! as GuildMember,
-          command,
-        )
+        const allowed = await client.auth.verify(interaction.member! as GuildMember, command);
 
         if (!allowed) {
-          return
+          return;
         }
 
         if (!(await command.perms(client, cmdInteraction))) {
-          return
+          return;
         }
 
-        await command.default(client, interaction)
+        await command.default(client, interaction);
       }
     }
   }

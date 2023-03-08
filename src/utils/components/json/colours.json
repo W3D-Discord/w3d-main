@@ -1,0 +1,41 @@
+{
+  "neutral": {
+    "black": "0x000000",
+    "grey": "0x808080",
+    "white": "0xffffff"
+  },
+
+  "discord": {
+    "blurple": "0x5865F2",
+    "green": "0x57F287",
+    "yellow": "0xFEE75C",
+    "red": "0xED4245",
+    "fuchsia": "0xEB459E"
+  },
+
+  "logLevel": {
+    "log": "0x2541B2",
+    "info": "0x88C035",
+    "warn": "0xFFD046",
+    "critical": "0xE4C8C8",
+    "error": "0xFF1B1C"
+  },
+
+  "embed": {
+    "white": "0xf9f9f9",
+    "grey": "0x808080",
+    "black": "0x333333",
+    "purpleVeronica": "0xA71BE2",
+    "bluePersian": "0x453BBA",
+    "blueSky": "0x00ABE7",
+    "green": "0x0FFA56",
+    "lime": "0xC1FD35",
+    "warn": "0xFFC223",
+    "yellow": "0xFFB400",
+    "orange": "0xFF6700",
+    "redScarlet": "0xFF270A",
+    "error": "0xEE1B29",
+    "redBittersweet": "0xFF595E",
+    "pinkBlush": "0xE36588"
+  }
+}
